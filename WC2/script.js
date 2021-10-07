@@ -1,10 +1,14 @@
 "use strict";
+
+import team from './team.js'
+
 let pokemons = [];
 
 console.log('page loaded!');
 
 
-fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+function fetchPokemon(){
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
     .then(response => response.json())
     .then(data => {
         //get individual pokemon
@@ -16,11 +20,17 @@ fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
                 })
         });
     });
+}
 
-console.log(pokemons);
+window.onload = function(){
+    fetchPokemon();
+    window.setTimeout(buildList, 3000)
+}
 
-function bluidList() {
 
+
+function buildList() {
+    pokemon.sort((a, b) => a.id - b.id);
     let html = '';
 
     html += `
@@ -34,9 +44,5 @@ function bluidList() {
     `
 
     document.getElementById("Pokemon").innerHTML += html;
-
-
-
-
-
 }
+
